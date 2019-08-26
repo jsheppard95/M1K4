@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.14">
+  <POU Name="MAIN" Id="{be9d7298-e5ea-4dcd-9a50-b1ad61391ae2}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+//	{attribute 'TcLinkTo' := '.bLimFwd:=TIIB[y_up]^STM Status^Status^Digital input 1; .bLimBwd:=TIIB[y_up]^STM Status^Status^Digital input 2; .bSTO:=TIIB[di]^Channel 1^Input'}	
+	{attribute 'TcLinkTo':='.bLimFwd:=TIIB[y_up]^STM Status^Status^Digital input 1'}		
+    M1: DUT_MotionStage:=(nEnableMode:=0); // Yup
+//	{attribute 'TcLinkTo' := '.bLimFwd:=TIIB[y_dwn]^STM Status^Status^Digital input 1; .bLimBwd:=TIIB[y_dwn]^STM Status^Status^Digital input 2'}
+	M2: DUT_MotionStage:=(nEnableMode:=0); // Ydwn
+//	{attribute 'TcLinkTo' := '.bLimFwd:=TIIB[x_up]^STM Status^Status^Digital input 1; .bLimBwd:=TIIB[x_up]^STM Status^Status^Digital input 2'}	
+	M3: DUT_MotionStage:=(nEnableMode:=0); // Xup
+//	{attribute 'TcLinkTo' := '.bLimFwd:=TIIB[x_dwn]^STM Status^Status^Digital input 1; .bLimBwd:=TIIB[x_dwn]^STM Status^Status^Digital input 2'}
+	M4: DUT_MotionStage:=(nEnableMode:=0); // Xdwn
+//	{attribute 'TcLinkTo' := '.bLimFwd:=TIIB[pitch]^STM Status^Status^Digital input 1; .bLimBwd:=TIIB[pitch]^STM Status^Status^Digital input 2'}	
+	M5: DUT_MotionStage:=(nEnableMode:=0); // PitchCoarse
+//	{attribute 'TcLinkTo' := '.bLimFwd:=TIIB[pitch]^STM Status^Status^Digital input 1; .bLimBwd:=TIIB[pitch]^STM Status^Status^Digital input 2'}	
+	M6: DUT_MotionStage:=(nEnableMode:=0); // Bender
+
+	fbMotionStage_x_up, fbMotionStage_x_dwn, fbMotionStage_y_up, fbMotionStage_y_dwn, fbMotionStage_pitch, fbMotionStage_bender : FB_MotionStage;
+
+	stoEnable AT %I* : BOOL;
+
+	{attribute 'TcLinkTo' := '.Count:=TIIB[1-x_up_2-x_dwn]^FB Inputs Channel 1^Position'}	
+	x_up_enc  AT %I*: ST_RenishawAbsEnc;
+	{attribute 'TcLinkTo' := '.Count:=TIIB[1-x_up_2-x_dwn]^FB Inputs Channel 2^Position'}
+	x_dwn_enc  AT %I*: ST_RenishawAbsEnc;
+
+	{attribute 'TcLinkTo' := '.Count:=TIIB[1-y_up_2-y_dwn]^FB Inputs Channel 1^Position'}	
+	y_up_enc  AT %I*: ST_RenishawAbsEnc;
+	{attribute 'TcLinkTo' := '.Count:=TIIB[1-y_up_2-y_dwn]^FB Inputs Channel 2^Position'}
+	y_dwn_enc  AT %I*: ST_RenishawAbsEnc:=(Ref:=0);
+
+	// Auto coupling function block
+	fbAutoCoupleX : FB_GantryAutoCoupling;
+	fbAutoCoupleY : FB_GantryAutoCoupling;
+
+	bExecuteCoupleX : BOOL;
+	bExecuteCoupleY : BOOL;
+	bExecuteDecoupleX : BOOL;
+	bExecuteDecoupleY : BOOL;
+	bGantryAlreadyCoupledX : BOOL;
+	bGantryAlreadyCoupledY : BOOL;
+	
+	// Testing variables
+	nCurrGantryX : LINT;
+	nCurrGantryY : LINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Buttons to enable motors: write 3 to enable
+M1.nCommand;
+M2.nCommand;
+M3.nCommand;
+M4.nCommand;
+M5.nCommand;
+
+// Gantry Differences to monitor
+nCurrGantryY := ULINT_TO_LINT(y_dwn_enc.Count - y_up_enc.Count);
+nCurrGantryX := ULINT_TO_LINT(x_dwn_enc.Count - x_up_enc.Count);
+
+// E-stop
+M1.bHardwareEnable := stoEnable;
+M2.bHardwareEnable := stoEnable;
+M3.bHardwareEnable := stoEnable;
+M4.bHardwareEnable := stoEnable;
+M5.bHardwareEnable := stoEnable;
+M6.bHardwareEnable := stoEnable;
+
+
+// Start Autocoupling
+fbAutoCoupleX(nGantryTol:=50000, Master:=M3, MasterEnc:=x_up_enc, Slave:=M4,
+	          SlaveEnc:=x_dwn_enc, bExecuteCouple:=bExecuteCoupleX,
+              bExecuteDecouple:=bExecuteDecoupleX,
+              bGantryAlreadyCoupled=>bGantryAlreadyCoupledX);
+
+fbAutoCoupleY(nGantryTol:=50000, Master:=M1, MasterEnc:=y_up_enc, Slave:=M2,
+	          SlaveEnc:=y_dwn_enc, bExecuteCouple:=bExecuteCoupleY,
+              bExecuteDecouple:=bExecuteDecoupleY,
+			  bGantryAlreadyCoupled=>bGantryAlreadyCoupledY);
+
+fbMotionStage_y_up  (stMotionStage:=M1);
+fbMotionStage_y_dwn (stMotionStage:=M2);
+fbMotionStage_x_up  (stMotionStage:=M3);
+fbMotionStage_x_dwn (stMotionStage:=M4);
+fbMotionStage_pitch (stMotionStage:=M5);
+fbMotionStage_bender (stMotionStage:=M6);]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="48" Count="17" />
+      <LineId Id="72" Count="17" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
