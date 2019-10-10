@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.14">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.18">
   <POU Name="MAIN" Id="{be9d7298-e5ea-4dcd-9a50-b1ad61391ae2}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
@@ -45,13 +45,14 @@ VAR
 	// Gantry variables
 	nCurrGantryX : LINT;
 	nCurrGantryY : LINT;
-	nGantryTolX : LINT := 50000;
-	nGantryTolY : LINT := 50000;
+	nGantryTolX : LINT := 25000;
+	nGantryTolY : LINT := 25000;
 	
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// Buttons to enable motors: write 0 to enable, 2 to disable
+      <ST><![CDATA[// M1K4
+// Buttons to enable motors: write 0 to enable, 2 to disable
 M1.nEnableMode; // Yup
 M2.nEnableMode; // Ydwn
 M3.nEnableMode; // Xup
@@ -95,15 +96,5 @@ fbMotionStage_x_dwn (stMotionStage:=M4);
 fbMotionStage_pitch (stMotionStage:=M5);
 fbMotionStage_bender (stMotionStage:=M6);]]></ST>
     </Implementation>
-    <LineIds Name="MAIN">
-      <LineId Id="48" Count="5" />
-      <LineId Id="136" Count="4" />
-      <LineId Id="135" Count="0" />
-      <LineId Id="54" Count="2" />
-      <LineId Id="186" Count="0" />
-      <LineId Id="58" Count="7" />
-      <LineId Id="72" Count="17" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>
