@@ -61,8 +61,18 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"658"</v>
+              <v n="TextDefault">"Couple Status: 0 = Decoupled, 1 = Coupled"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"318"</v>
               <v n="TextDefault">"Couple Status: TRUE if coupled"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"660"</v>
+              <v n="TextDefault">"Current Gantry Difference (Axilon): %f"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -93,6 +103,31 @@
             <o>
               <v n="TextID">"321"</v>
               <v n="TextDefault">"Decouple Motors"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"24"</v>
+              <v n="TextDefault">"Disable"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"25"</v>
+              <v n="TextDefault">"Enable"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"22"</v>
+              <v n="TextDefault">"Enable Mode: %f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"657"</v>
+              <v n="TextDefault">"Enable Status: 0 = Enabled, 2 = Disabled"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"659"</v>
+              <v n="TextDefault">"Ensure motors are coupled before attempting motion!"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -181,8 +216,18 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"825"</v>
+              <v n="TextDefault">"Units: mmUnits: um"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"480"</v>
               <v n="TextDefault">"Units: um"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"558"</v>
+              <v n="TextDefault">"Units: Units: mm"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -193,6 +238,11 @@
             <o>
               <v n="TextID">"14"</v>
               <v n="TextDefault">"Velocity: %f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"23"</v>
+              <v n="TextDefault">"Write 0 to Enable, 2 to Disable"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
