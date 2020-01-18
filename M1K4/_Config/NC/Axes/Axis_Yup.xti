@@ -1325,7 +1325,7 @@ External Setpoint Generation:
 		<Name>__FILENAME__</Name>
 		<AxisPara>
 			<Dynamic Acceleration="0.2" Deceleration="0.2" DelayTime="0.008"/>
-			<Velo Maximum="0.45"/>
+			<Velo Maximum="0.2"/>
 			<OtherSettings AllowMotionCmdToSlave="true"/>
 		</AxisPara>
 		<Encoder Name="Enc" EncType="29">
@@ -1333,10 +1333,6 @@ External Setpoint Generation:
 				<SoftEndMinControl Enable="true" Range="3"/>
 				<SoftEndMaxControl Enable="true" Range="26.5"/>
 				<Inc RefSoftSyncMask="#x0000ffff"/>
-				<ParameterChanged>14</ParameterChanged>
-				<ParameterChanged>11</ParameterChanged>
-				<ParameterChanged>13</ParameterChanged>
-				<ParameterChanged>12</ParameterChanged>
 			</EncPara>
 			<Vars VarGrpType="1">
 				<Name>Inputs</Name>
