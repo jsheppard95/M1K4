@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.18">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.12">
   <POU Name="MAIN" Id="{be9d7298-e5ea-4dcd-9a50-b1ad61391ae2}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR		
@@ -55,8 +55,13 @@ M4.nEnableMode; // Xdwn
 M5.nEnableMode; // PitchCoarse
 
 // Encoder Reference Values: Starting motor positions prior to checkout
+(*
 y_up_enc.Ref := 4411200;
 y_dwn_enc.Ref := 4084980;
+*)
+// Post-alignment reference values
+y_up_enc.Ref := 15000270;
+y_dwn_enc.Ref := 15454300;
 x_up_enc.Ref := 24000300;
 x_dwn_enc.Ref := 23999400;
 
